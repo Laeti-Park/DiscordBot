@@ -1,0 +1,23 @@
+{
+  "name": "blossom-bot",
+  "version": "1.0.0",
+  "description": "Blossom 디스코드 봇🤖, Brawl Stars🎮",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Publish your first package",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^1.4.0",
+    "@discordjs/rest": "^1.4.0",
+    "discord-api-types": "^0.37.22",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "No packages published"
+  }
+}
