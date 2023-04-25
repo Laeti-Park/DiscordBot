@@ -1,8 +1,6 @@
-const {
-    EmbedBuilder
-} = require('discord.js');
+import {EmbedBuilder} from "discord.js";
 
-const commandEXE = new EmbedBuilder()
+const embed = new EmbedBuilder()
     .setColor(0x2ECC70)
     .setTitle("🤖Blossom 서버 봇 명령어 모음🤖")
     .addFields({
@@ -32,6 +30,6 @@ const commandEXE = new EmbedBuilder()
             '일시 정지 : !pause\n' +
             '다시 재생 : !resume(!re)\n' +
             '노래 정지 : !stop(!st)'
-    });
+    }).toJSON();
 
-module.exports = commandEXE;
+export default embed;

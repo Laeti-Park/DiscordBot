@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Blossom 디스코드 봇🤖, Brawl Stars🎮",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
   },
   "keywords": [],
   "author": "Publish your first package",
@@ -14,7 +16,10 @@
     "@discordjs/rest": "^1.4.0",
     "discord-api-types": "^0.37.22",
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.0.1",
+    "sequelize": "6.28.1",
+    "sequelize-cli": "^6.5.2"
   },
   "repository": {
     "type": "git",
