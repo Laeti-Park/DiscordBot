@@ -34,7 +34,11 @@ const commandsExecution = async (commandName, userName, options) => {
         const result = await getMember(name);
 
         return {
-            embeds: [await profileEmbed(result.id, result.name)]
+            embeds: [await profileEmbed(result)],
+            files: [{
+                attachment: `../blossom-web-frontend/public/images/profile_pictures/${result.profile_picture}.webp`,
+                name: `${result.profile_picture}.webp`
+            }]
         };
     }
 }

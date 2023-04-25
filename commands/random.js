@@ -95,11 +95,9 @@ const embed = (id, name, rarity, brawlerClass, gender, icon) => new EmbedBuilder
         value:
             `${rarityList.find((item) => {
                 return item.name === rarity
-            }).icon} \`${rarity}${spacePlace(rarity)}\` | 
-        ${classesList.find((item) => {
+            }).icon} \`${rarity}${spacePlace(rarity)}\`\n${classesList.find((item) => {
                 return item.name === brawlerClass
-            }).icon} \`${brawlerClass}${spacePlace(brawlerClass)}\`
-        ${genderList.find((item) => {
+            }).icon} \`${brawlerClass}${spacePlace(brawlerClass)}\`\n${genderList.find((item) => {
                 return item.name === gender
             }).icon} \`${gender}${spacePlace(gender)}\``
     }).toJSON();
