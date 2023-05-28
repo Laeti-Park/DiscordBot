@@ -3,7 +3,6 @@ import {brawlerService} from "../services/index.js";
 
 import config from "../config/index.js";
 
-
 const embed = (brawler) => {
     const spacePlace = (text) => {
         const length = text.length;
@@ -34,7 +33,7 @@ const embed = (brawler) => {
 const randomCommand = {
     data: new SlashCommandBuilder()
         .setName('뽑기')
-        .setDescription('랜덤 브롤러 뽑기')
+        .setDescription('랜덤 브롤러를 뽑아 보여준다.')
         .addStringOption((option) =>
             option
                 .setName('희귀도')

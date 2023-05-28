@@ -4,21 +4,21 @@ import config from "../config/index.js";
 const Brawler = await import (`${config.sequelize}/brawler.js`);
 
 export class brawlerService {
-    static selectBrawler = async (rarity, brawlerClass, gender) => {
-        console.log(Brawler);
+    static selectBrawler = async (rarityOption, classOption, genderOption) => {
 
         return await Brawler.default.findAll({
             where: {
                 rarity: {
-                    [Op.like]: rarity,
+                    [Op.like]: rarityOption,
                 },
                 class: {
-                    [Op.like]: brawlerClass,
+                    [Op.like]: classOption,
                 },
                 gender: {
-                    [Op.like]: gender,
+                    [Op.like]: genderOption,
                 }
             },
+
         });
     }
 }

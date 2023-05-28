@@ -26,7 +26,7 @@ const embed = (member) => {
 
 const profileCommand = {
     data: new SlashCommandBuilder().setName('프로필')
-        .setDescription('프로필 확인')
+        .setDescription('플레이어의 프로필 정보를 보여준다.')
         .addStringOption((option) =>
             option
                 .setName('닉네임')

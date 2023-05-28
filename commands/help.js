@@ -25,7 +25,7 @@ const embed = new EmbedBuilder()
 const helpCommand = {
     data: new SlashCommandBuilder()
         .setName('도움말')
-        .setDescription('Blossom Bot 전체 명령어 목록').toJSON(),
+        .setDescription('Blossom Bot 전체 명령어 목록을 보여준다.').toJSON(),
     async execute(interaction) {
         await interaction.reply({
             embeds: [embed]
