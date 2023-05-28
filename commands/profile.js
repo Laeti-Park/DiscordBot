@@ -1,58 +1,52 @@
-import {EmbedBuilder} from "discord.js";
+import {EmbedBuilder, SlashCommandBuilder} from "discord.js";
+import {memberService} from "../services/index.js";
 
-import Member from "../../blossom-web-backend/models/member.js"
-import {Op} from "sequelize";
+import config from "../config/index.js";
 
-const roman = ['I', 'II', 'III'];
+const embed = (member) => {
+    const roman = ['I', 'II', 'III'];
 
-export const getMember = async (name) => {
+    return new EmbedBuilder()
+        .setColor(0x2ECC70)
+        .setTitle(member.name)
+        .setURL(`http://blossomstats.site/member/${member.id.replace("#", "")}`)
+        .setDescription(member.id)
+        .setThumbnail(`attachment://${member.profile_picture}.webp`)
+        .addFields({
+            name: `${config.trophyLeagueMode} 현재(최고) 트로피`,
+            value: `\`${member.trophy_current}개(${member.trophy_highest}개)\``
+        }, {
+            name: `${config.powerLeagueSoloMode} 솔로 현재(최고) 랭크`,
+            value: `${config.powerLeagueRank[Math.floor(member.league_solo_current / 3)].icon}${roman[member.league_solo_current % 3]}(${config.powerLeagueRank[Math.floor(member.league_solo_highest / 3)].icon}${roman[member.league_solo_highest % 3]})`
+        }, {
+            name: `${config.powerLeagueTeamMode}팀 현재(최고) 랭크`,
+            value: `${config.powerLeagueRank[Math.floor(member.league_team_current / 3)].icon}${roman[member.league_team_current % 3]}(${config.powerLeagueRank[Math.floor(member.league_team_highest / 3)].icon}${roman[member.league_team_highest % 3]})`
+        }).toJSON();
+}
 
-    return await Member.findOne({
-        where: {
-            name: {
-                [Op.like]: `%${name}%`,
-            }
-        },
-        raw: true
-    }).then(result => {
-        return result;
-    });
-};
+const profileCommand = {
+    data: new SlashCommandBuilder().setName('프로필')
+        .setDescription('프로필 확인')
+        .addStringOption((option) =>
+            option
+                .setName('닉네임')
+                .setDescription('닉네임을 설정합니다.')
+                .setRequired(true))
+        .toJSON(),
+    async execute(interaction) {
+        const options = interaction.options;
 
-const rank = [
-    {
-        icon: `<:rank_icon_01:1100354671207522396>`,
-    }, {
-        icon: `<:rank_icon_02:1100354674470694932>`,
-    }, {
-        icon: `<:rank_icon_03:1100354676236492842>`,
-    }, {
-        icon: `<:rank_icon_04:1100354679973621890>`,
-    }, {
-        icon: `<:rank_icon_05:1100354683341647912>`,
-    }, {
-        icon: `<:rank_icon_06:1100354684939681793>`,
-    }, {
-        icon: `<:rank_icon_07:1100354688194453544>`,
+        const name = options.getString("닉네임") !== null ? options.getString("닉네임") : "";
+        const member = await memberService.selectMember(name);
+
+        await interaction.reply({
+            embeds: [await embed(member)],
+            files: [{
+                attachment: `${config.public}/profile_pictures/${member.profile_picture}.webp`,
+                name: `${member.profile_picture}.webp`
+            }]
+        });
     }
-];
+}
 
-const embed = (result) => new EmbedBuilder()
-    .setColor(0x2ECC70)
-    .setTitle(result.name)
-    .setURL(`http://blossomstats.site/member/${result.id.replace("#", "")}`)
-    .setDescription(result.id)
-    .setThumbnail(`attachment://${result.profile_picture}.webp`)
-    .addFields({
-        name: "<:icon_trophy_small:1015938189057331211> 현재(최고) 트로피",
-        value: `\`${result.trophy_current}개(${result.trophy_highest}개)\``
-    }, {
-        name: "<:icon_rank_solo_mode:1100354534263492619> 솔로 현재(최고) 랭크",
-        value: `${rank[Math.floor(result.league_solo_current / 3)].icon}${roman[result.league_solo_current % 3]}(${rank[Math.floor(result.league_solo_highest / 3)].icon}${roman[result.league_solo_highest % 3]})`
-    }, {
-        name: "<:icon_rank_team_mode:1100354536184496198> 팀 현재(최고) 랭크",
-        value: `${rank[Math.floor(result.league_team_current / 3)].icon}${roman[result.league_team_current % 3]}(${rank[Math.floor(result.league_team_highest / 3)].icon}${roman[result.league_team_highest % 3]})`
-    },)
-    .toJSON();
-
-export default embed;
+export default profileCommand;

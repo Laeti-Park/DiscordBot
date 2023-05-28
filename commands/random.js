@@ -1,105 +1,93 @@
-import {EmbedBuilder} from "discord.js";
+import {EmbedBuilder, SlashCommandBuilder} from "discord.js";
+import {brawlerService} from "../services/index.js";
 
-import Brawler from "../../blossom-web-backend/models/brawler.js"
-import {Op} from "sequelize";
+import config from "../config/index.js";
 
-export const getBrawler = async (rarity, brawlerClass, gender) => {
 
-    return await Brawler.findAll({
-        where: {
-            rarity: {
-                [Op.like]: rarity,
-            },
-            class: {
-                [Op.like]: brawlerClass,
-            },
-            gender: {
-                [Op.like]: gender,
-            }
-        },
-        raw: true
-    }).then(result => {
-        return result;
-    });
-}
-
-const rarityList = [{
-    name: `기본`,
-    icon: `<:icon_brawler_trophy:1015949427338391624>`,
-}, {
-    name: `희귀`,
-    icon: `<:icon_brawler_rare:1015949424280739870>`,
-}, {
-    name: `초희귀`,
-    icon: `<:icon_brawler_super_rare:1015949426008793098>`,
-}, {
-    name: `영웅`,
-    icon: `<:icon_brawler_epic:1015949418794582086>`,
-}, {
-    name: `신화`,
-    icon: `<:icon_brawler_mythic:1015949422124863500>`,
-}, {
-    name: `전설`,
-    icon: `<:icon_brawler_legend:1015949420682022962>`,
-}, {
-    name: `크로마틱`,
-    icon: `<:icon_brawler_chromatic:1015949416546435113>`
-}];
-
-const classesList = [{
-    name: `대미지 딜러`,
-    icon: `⚔️`,
-}, {
-    name: `탱커`,
-    icon: `🛡️`,
-}, {
-    name: `서포터`,
-    icon: `💊`,
-}, {
-    name: `어쌔신`,
-    icon: `🗡️`,
-}, {
-    name: `컨트롤러`,
-    icon: `🪄`,
-}, {
-    name: `저격수`,
-    icon: `🔫`,
-}, {
-    name: `투척수`,
-    icon: `🧨`,
-}];
-
-const genderList = [{
-    name: `남성`,
-    icon: `♂️`,
-}, {
-    name: `여성`,
-    icon: `♀️`,
-}];
-
-const spacePlace = (text) => {
-    const length = text.length;
-    let space = ``;
-    for (let i = 0; i < 10 - (length * 2); i++) {
-        space += ` `;
+const embed = (brawler) => {
+    const spacePlace = (text) => {
+        const length = text.length;
+        let space = ``;
+        for (let i = 0; i < 10 - (length * 2); i++) {
+            space += ` `;
+        }
+        return space;
     }
-    return space;
+
+    return new EmbedBuilder()
+        .setColor(0x2ECC70)
+        .setDescription(`${config.megaboxEmoji} **랜덤 브롤러 뽑기**`)
+        .setThumbnail(`attachment://${brawler.id}.webp`)
+        .addFields({
+            name: `${brawler.icon} ${brawler.name}`,
+            value:
+                `${config.rarityList.find((item) => {
+                    return item.name === brawler.rarity
+                }).icon} \`${brawler.rarity}${spacePlace(brawler.rarity)}\`\n${config.classesList.find((item) => {
+                    return item.name === brawler.class
+                }).icon} \`${brawler.class}${spacePlace(brawler.class)}\`\n${config.genderList.find((item) => {
+                    return item.name === brawler.gender
+                }).icon} \`${brawler.gender}${spacePlace(brawler.gender)}\``
+        }).toJSON();
 }
 
-const embed = (id, name, rarity, brawlerClass, gender, icon) => new EmbedBuilder()
-    .setColor(0x2ECC70)
-    .setDescription(`<:reward_megabox:1015938099047583825> **랜덤 브롤러 뽑기**`)
-    .setThumbnail(`attachment://${id}.webp`)
-    .addFields({
-        name: `${icon} ${name}`,
-        value:
-            `${rarityList.find((item) => {
-                return item.name === rarity
-            }).icon} \`${rarity}${spacePlace(rarity)}\`\n${classesList.find((item) => {
-                return item.name === brawlerClass
-            }).icon} \`${brawlerClass}${spacePlace(brawlerClass)}\`\n${genderList.find((item) => {
-                return item.name === gender
-            }).icon} \`${gender}${spacePlace(gender)}\``
-    }).toJSON();
+const randomCommand = {
+    data: new SlashCommandBuilder()
+        .setName('뽑기')
+        .setDescription('랜덤 브롤러 뽑기')
+        .addStringOption((option) =>
+            option
+                .setName('희귀도')
+                .setDescription('희귀도를 설정합니다.')
+                .addChoices(
+                    {name: "희귀", value: "희귀"},
+                    {name: "초희귀", value: "초희귀"},
+                    {name: "영웅", value: "영웅"},
+                    {name: "신화", value: "신화"},
+                    {name: "전설", value: "전설"},
+                    {name: "크로마틱", value: "크로마틱"})
+                .setRequired(false))
+        .addStringOption((option) =>
+            option
+                .setName('역할군')
+                .setDescription('역할군을 설정합니다.')
+                .addChoices(
+                    {name: "대미지 딜러", value: "대미지 딜러"},
+                    {name: "탱커", value: "탱커"},
+                    {name: "투척수", value: "투척수"},
+                    {name: "저격수", value: "저격수"},
+                    {name: "컨트롤러", value: "컨트롤러"},
+                    {name: "어쌔신", value: "어쌔신"},
+                    {name: "서포터", value: "서포터"})
+                .setRequired(false))
+        .addStringOption((option) =>
+            option
+                .setName('성별')
+                .setDescription('성별을 설정합니다.')
+                .addChoices(
+                    {name: "남성", value: "남성"},
+                    {name: "여성", value: "여성"})
+                .setRequired(false)
+        ).toJSON(),
+    async execute(interaction) {
+        const options = interaction.options;
 
-export default embed;
+        const rarityOption = options.getString("희귀도") !== null ? options.getString("희귀도") : "%%";
+        const classOption = options.getString("역할군") !== null ? options.getString("역할군") : "%%";
+        const genderOption = options.getString("성별") !== null ? options.getString("성별") : "%%";
+
+        const result = await brawlerService.selectBrawler(rarityOption, classOption, genderOption);
+        const randomNumber = Math.floor(Math.random() * result.length + 1);
+        const randomBrawler = result[randomNumber];
+
+        await interaction.reply({
+            embeds: [await embed(randomBrawler)],
+            files: [{
+                attachment: `${config.public}/brawler_profile/${randomBrawler.id}.webp`,
+                name: `${randomBrawler.id}.webp`
+            }]
+        });
+    }
+}
+
+export default randomCommand;
