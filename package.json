@@ -12,9 +12,6 @@
   "author": "Publish your first package",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^1.4.0",
-    "@discordjs/rest": "^1.4.0",
-    "discord-api-types": "^0.37.22",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "mysql2": "^3.0.1",
