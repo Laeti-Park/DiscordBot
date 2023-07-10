@@ -7,26 +7,26 @@ const embed = (member) => {
 
     return new EmbedBuilder()
         .setColor(0x2ECC70)
-        .setTitle(`${member.member_name}`)
-        .setURL(`http://blossomstats.site/brawler/${member.member_id.replace("#", "")}`)
-        .setDescription(member.member_id)
-        .setThumbnail(`attachment://brawler_${member.brawler_id}.webp`)
+        .setTitle(`${member.MEMBER_NM}`)
+        .setURL(`http://blossomstats.site/brawler/${member.MEMBER_ID.replace("#", "")}`)
+        .setDescription(member.MEMBER_ID)
+        .setThumbnail(`attachment://brawler_${member.BRAWLER_ID}.webp`)
         .addFields({
             name: `브롤러 정보`,
-            value: `${config.powerPoint} \`파워 레벨 : ${member.power}\``
+            value: `${config.powerPoint} \`파워 레벨 : ${member.BRAWLER_PWR}\``
         }, {
             name: `${config.trophyEmoji} 현재 트로피(최고 트로피)`,
-            value: `${config.trophyLeagueRank[parseInt(member.trophy_rank) - 1].icon}\`${member.trophy_current}개(${member.trophy_highest}개)\``
+            value: `${config.trophyLeagueRank[parseInt(member.TROPHY_RNK) - 1].icon}\`${member.TROPHY_CUR}개(${member.TROPHY_HGH}개)\``
         }, {
             name: `${config.trophyLeagueEmoji} 트로피 리그 매치 및 승률`,
-            value: `${config.accountEmoji}\`매치 : ${member.match_trophy}회 / 승률 : ${member.victory_trophy > 0 ?
-                Math.floor(member.victory_trophy / (member.victory_trophy + member.defeat_trophy) * 100) : 0}%\``
+            value: `${config.accountEmoji}\`매치 : ${member.MATCH_CNT_TL}회 / 승률 : ${member.MATCH_CNT_VIC_TL > 0 ?
+                Math.floor(member.MATCH_CNT_VIC_TL / (member.MATCH_CNT_VIC_TL + member.MATCH_CNT_DEF_TL) * 100) : 0}%\``
         }, {
             name: `${config.powerLeagueEmoji} 파워 리그 매치 및 승률`,
-            value: `${config.accountEmoji}\`매치 : ${member.match_league}회 / 승률 : ${member.victory_league > 0 ?
-                Math.floor(member.victory_league / (member.victory_league + member.defeat_league) * 100) : 0}%\``
+            value: `${config.accountEmoji}\`매치 : ${member.MATCH_CNT_PL}회 / 승률 : ${member.MATCH_CNT_VIC_PL > 0 ?
+                Math.floor(member.MATCH_CNT_VIC_PL / (member.MATCH_CNT_VIC_PL + member.MATCH_CNT_DEF_PL) * 100) : 0}%\``
         }).toJSON();
-}
+};
 
 const brawlerCommand = {
     data: new SlashCommandBuilder()
@@ -53,11 +53,11 @@ const brawlerCommand = {
         await interaction.reply({
             embeds: [await embed(memberBrawler)],
             files: [{
-                attachment: `${config.public}/brawler_profile/${memberBrawler.brawler_id}.webp`,
-                name: `brawler_${memberBrawler.brawler_id}.webp`
+                attachment: `${config.public}/brawler_profile/${memberBrawler.BRAWLER_ID}.webp`,
+                name: `brawler_${memberBrawler.BRAWLER_ID}.webp`
             }]
         });
     }
-}
+};
 
 export default brawlerCommand;

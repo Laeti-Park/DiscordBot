@@ -1,35 +1,35 @@
 import {Op} from "sequelize";
 import config from "../config/index.js";
 
-const Member = await import (`${config.sequelize}/member.js`);
-const MemberBrawler = await import (`${config.sequelize}/member_brawler.js`);
-const Brawler = await import (`${config.sequelize}/brawler.js`);
+const Member = await import (`${config.sequelize}/table_member.js`);
+const MemberBrawler = await import (`${config.sequelize}/table_member_brawler.js`);
+const Brawler = await import (`${config.sequelize}/view_info_brawler.js`);
 
 export class memberService {
     static selectMember = async (name) => {
         return await Member.default.findOne({
             where: {
-                name: {
+                MEMBER_NM: {
                     [Op.like]: `%${name}%`,
                 }
             }
         });
-    }
+    };
 
     static async selectMemberBrawler(name, brawlerName) {
         const brawler = await Brawler.default.findOne({
-            attributes: ["id", "name", "rarity"],
+            attributes: ["BRAWLER_ID", "BRAWLER_NM", "BRAWLER_RRT"],
             where: {
-                name: {
+                BRAWLER_NM: {
                     [Op.like]: `%${brawlerName}%`,
                 }
             }
         });
 
         const member = await Member.default.findOne({
-            attributes: ["id", "name"],
+            attributes: ["MEMBER_ID", "MEMBER_NM"],
             where: {
-                name: {
+                MEMBER_NM: {
                     [Op.like]: `%${name}%`,
                 }
             }
@@ -37,19 +37,19 @@ export class memberService {
 
         return await MemberBrawler.default.findOne({
             where: {
-                member_id: {
-                    [Op.like]: `%${member.id}%`,
+                MEMBER_ID: {
+                    [Op.like]: `%${member.MEMBER_ID}%`,
                 },
-                brawler_id: {
-                    [Op.like]: `%${brawler.id}%`,
+                BRAWLER_ID: {
+                    [Op.like]: `%${brawler.BRAWLER_ID}%`,
                 }
             },
-            group: ["member_id", "brawler_id"]
+            group: ["MEMBER_ID", "BRAWLER_ID"]
         }).then(result => {
-            result.member_name = member.name;
-            result.brawler_name = brawler.name;
-            result.rarity = brawler.rarity;
+            result.MEMBER_NM = member.MEMBER_NM;
+            result.BRAWLER_NM = brawler.BRAWLER_NM;
+            result.BRAWLER_RRT = brawler.BRAWLER_RRT;
             return result;
         });
-    }
+    };
 }

@@ -8,19 +8,19 @@ const embed = (member) => {
 
     return new EmbedBuilder()
         .setColor(0x2ECC70)
-        .setTitle(member.name)
-        .setURL(`http://blossomstats.site/member/${member.id.replace("#", "")}`)
-        .setDescription(member.id)
-        .setThumbnail(`attachment://${member.profile_picture}.webp`)
+        .setTitle(member.MEMBER_NM)
+        .setURL(`http://blossomstats.site/member/${member.MEMBER_ID.replace("#", "")}`)
+        .setDescription(member.MEMBER_ID)
+        .setThumbnail(`attachment://${member.MEMBER_PROFILE}.webp`)
         .addFields({
-            name: `${config.trophyLeagueMode} 현재(최고) 트로피`,
-            value: `\`${member.trophy_current}개(${member.trophy_highest}개)\``
+            name: `${config.trophyLeagueEmoji} 현재(최고) 트로피`,
+            value: `\`${member.TROPHY_CUR}개(${member.TROPHY_HGH}개)\``
         }, {
             name: `${config.powerLeagueSoloMode} 솔로 현재(최고) 랭크`,
-            value: `${config.powerLeagueRank[Math.floor(member.league_solo_current / 3)].icon}${roman[member.league_solo_current % 3]}(${config.powerLeagueRank[Math.floor(member.league_solo_highest / 3)].icon}${roman[member.league_solo_highest % 3]})`
+            value: `${config.powerLeagueRank[Math.floor(member.PL_SL_CUR / 3)].icon}${roman[member.PL_SL_CUR % 3]}(${config.powerLeagueRank[Math.floor(member.PL_SL_HGH / 3)].icon}${roman[member.PL_SL_HGH % 3]})`
         }, {
-            name: `${config.powerLeagueTeamMode}팀 현재(최고) 랭크`,
-            value: `${config.powerLeagueRank[Math.floor(member.league_team_current / 3)].icon}${roman[member.league_team_current % 3]}(${config.powerLeagueRank[Math.floor(member.league_team_highest / 3)].icon}${roman[member.league_team_highest % 3]})`
+            name: `${config.powerLeagueTeamMode} 팀 현재(최고) 랭크`,
+            value: `${config.powerLeagueRank[Math.floor(member.PL_TM_CUR / 3)].icon}${roman[member.PL_TM_CUR % 3]}(${config.powerLeagueRank[Math.floor(member.PL_TM_HGH / 3)].icon}${roman[member.PL_TM_HGH % 3]})`
         }).toJSON();
 }
 
@@ -42,8 +42,8 @@ const profileCommand = {
         await interaction.reply({
             embeds: [await embed(member)],
             files: [{
-                attachment: `${config.public}/profile_pictures/${member.profile_picture}.webp`,
-                name: `${member.profile_picture}.webp`
+                attachment: `${config.public}/profile_pictures/${member.MEMBER_PROFILE}.webp`,
+                name: `${member.MEMBER_PROFILE}.webp`
             }]
         });
     }

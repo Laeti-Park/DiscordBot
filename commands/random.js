@@ -16,17 +16,17 @@ const embed = (brawler) => {
     return new EmbedBuilder()
         .setColor(0x2ECC70)
         .setDescription(`${config.megaboxEmoji} **랜덤 브롤러 뽑기**`)
-        .setThumbnail(`attachment://${brawler.id}.webp`)
+        .setThumbnail(`attachment://${brawler.BRAWLER_ID}.webp`)
         .addFields({
-            name: `${brawler.icon} ${brawler.name}`,
+            name: `${brawler.BRAWLER_ICN} ${brawler.BRAWLER_NM}`,
             value:
                 `${config.rarityList.find((item) => {
-                    return item.name === brawler.rarity
-                }).icon} \`${brawler.rarity}${spacePlace(brawler.rarity)}\`\n${config.classesList.find((item) => {
-                    return item.name === brawler.class
-                }).icon} \`${brawler.class}${spacePlace(brawler.class)}\`\n${config.genderList.find((item) => {
-                    return item.name === brawler.gender
-                }).icon} \`${brawler.gender}${spacePlace(brawler.gender)}\``
+                    return item.name === brawler.BRAWLER_RRT
+                }).icon} \`${brawler.BRAWLER_RRT}${spacePlace(brawler.BRAWLER_RRT)}\`\n${config.classesList.find((item) => {
+                    return item.name === brawler.BRAWLER_CL
+                }).icon} \`${brawler.BRAWLER_CL}${spacePlace(brawler.BRAWLER_CL)}\`\n${config.genderList.find((item) => {
+                    return item.name === brawler.BRAWLER_GNDR
+                }).icon} \`${brawler.BRAWLER_GNDR}${spacePlace(brawler.BRAWLER_GNDR)}\``
         }).toJSON();
 }
 
@@ -82,8 +82,8 @@ const randomCommand = {
         await interaction.reply({
             embeds: [await embed(randomBrawler)],
             files: [{
-                attachment: `${config.public}/brawler_profile/${randomBrawler.id}.webp`,
-                name: `${randomBrawler.id}.webp`
+                attachment: `${config.public}/brawler_profile/${randomBrawler.BRAWLER_ID}.webp`,
+                name: `${randomBrawler.BRAWLER_ID}.webp`
             }]
         });
     }
