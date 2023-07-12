@@ -1,12 +1,11 @@
 import {Op} from "sequelize";
 import config from "../config/index.js";
 
-const Brawler = await import (`${config.sequelize}/view_info_brawler.js`);
+const InfoBrawler = await import (`${config.sequelize}/view_info_brawler.js`);
 
 export class brawlerService {
-    static selectBrawler = async (rarityOption, classOption, genderOption) => {
-
-        return await Brawler.default.findAll({
+    static selectBrawler = async (rarityOption, classOption, genderOption) =>
+        await InfoBrawler.default.findAll({
             where: {
                 BRAWLER_RRT: {
                     [Op.like]: rarityOption,
@@ -19,5 +18,4 @@ export class brawlerService {
                 }
             },
         });
-    };
 }

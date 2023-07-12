@@ -4,12 +4,12 @@ import {memberService} from "../services/index.js";
 import config from "../config/index.js";
 
 const embed = (member) => {
-    const roman = ['I', 'II', 'III'];
+    const roman = ["I", "II", "III"];
 
     return new EmbedBuilder()
         .setColor(0x2ECC70)
         .setTitle(member.MEMBER_NM)
-        .setURL(`http://blossomstats.site/member/${member.MEMBER_ID.replace("#", "")}`)
+        .setURL(`https://blossomstats.site/member/${member.MEMBER_ID.replace("#", "")}`)
         .setDescription(member.MEMBER_ID)
         .setThumbnail(`attachment://${member.MEMBER_PROFILE}.webp`)
         .addFields({
@@ -22,15 +22,15 @@ const embed = (member) => {
             name: `${config.powerLeagueTeamMode} 팀 현재(최고) 랭크`,
             value: `${config.powerLeagueRank[Math.floor(member.PL_TM_CUR / 3)].icon}${roman[member.PL_TM_CUR % 3]}(${config.powerLeagueRank[Math.floor(member.PL_TM_HGH / 3)].icon}${roman[member.PL_TM_HGH % 3]})`
         }).toJSON();
-}
+};
 
 const profileCommand = {
-    data: new SlashCommandBuilder().setName('프로필')
-        .setDescription('플레이어의 프로필 정보를 보여준다.')
+    data: new SlashCommandBuilder().setName("프로필")
+        .setDescription("플레이어의 프로필 정보를 보여준다.")
         .addStringOption((option) =>
             option
-                .setName('닉네임')
-                .setDescription('닉네임을 설정합니다.')
+                .setName("닉네임")
+                .setDescription("닉네임을 설정합니다.")
                 .setRequired(true))
         .toJSON(),
     async execute(interaction) {
@@ -47,6 +47,6 @@ const profileCommand = {
             }]
         });
     }
-}
+};
 
 export default profileCommand;

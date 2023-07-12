@@ -3,7 +3,7 @@ import config from "../config/index.js";
 
 const Member = await import (`${config.sequelize}/table_member.js`);
 const MemberBrawler = await import (`${config.sequelize}/table_member_brawler.js`);
-const Brawler = await import (`${config.sequelize}/view_info_brawler.js`);
+const InfoBrawler = await import (`${config.sequelize}/view_info_brawler.js`);
 
 export class memberService {
     static selectMember = async (name) => {
@@ -17,7 +17,7 @@ export class memberService {
     };
 
     static async selectMemberBrawler(name, brawlerName) {
-        const brawler = await Brawler.default.findOne({
+        const brawler = await InfoBrawler.default.findOne({
             attributes: ["BRAWLER_ID", "BRAWLER_NM", "BRAWLER_RRT"],
             where: {
                 BRAWLER_NM: {

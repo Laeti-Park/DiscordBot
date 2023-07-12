@@ -3,6 +3,7 @@ import helpCommand from "./help.js";
 import randomCommand from "./random.js";
 import profileCommand from "./profile.js";
 import brawlerCommand from "./brawler.js";
+import rotationCommand from "./rotation.js";
 
 export default () => {
     const commandsDefinition = []
@@ -12,11 +13,14 @@ export default () => {
     commandsDefinition.push(randomCommand.data);
     commandsDefinition.push(profileCommand.data);
     commandsDefinition.push(brawlerCommand.data);
+    commandsDefinition.push(rotationCommand.data());
+    console.log(helpCommand.data, rotationCommand.data())
 
     commandsExecution.set(helpCommand.data.name, helpCommand);
     commandsExecution.set(randomCommand.data.name, randomCommand);
     commandsExecution.set(profileCommand.data.name, profileCommand);
     commandsExecution.set(brawlerCommand.data.name, brawlerCommand);
+    commandsExecution.set(rotationCommand.data().name, rotationCommand);
 
     return [commandsDefinition, commandsExecution]
 };

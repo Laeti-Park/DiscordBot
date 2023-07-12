@@ -8,7 +8,7 @@ const embed = (member) => {
     return new EmbedBuilder()
         .setColor(0x2ECC70)
         .setTitle(`${member.MEMBER_NM}`)
-        .setURL(`http://blossomstats.site/brawler/${member.MEMBER_ID.replace("#", "")}`)
+        .setURL(`https://blossomstats.site/brawler/${member.MEMBER_ID.replace("#", "")}`)
         .setDescription(member.MEMBER_ID)
         .setThumbnail(`attachment://brawler_${member.BRAWLER_ID}.webp`)
         .addFields({
@@ -48,7 +48,6 @@ const brawlerCommand = {
         const name = options.getString("닉네임") !== null ? options.getString("닉네임") : "";
         const brawler = options.getString("브롤러") !== null ? options.getString("브롤러") : "%%";
         const memberBrawler = await memberService.selectMemberBrawler(name, brawler);
-        console.log(memberBrawler)
 
         await interaction.reply({
             embeds: [await embed(memberBrawler)],

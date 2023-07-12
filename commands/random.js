@@ -11,7 +11,7 @@ const embed = (brawler) => {
             space += ` `;
         }
         return space;
-    }
+    };
 
     return new EmbedBuilder()
         .setColor(0x2ECC70)
@@ -28,16 +28,16 @@ const embed = (brawler) => {
                     return item.name === brawler.BRAWLER_GNDR
                 }).icon} \`${brawler.BRAWLER_GNDR}${spacePlace(brawler.BRAWLER_GNDR)}\``
         }).toJSON();
-}
+};
 
 const randomCommand = {
     data: new SlashCommandBuilder()
-        .setName('뽑기')
-        .setDescription('랜덤 브롤러를 뽑아 보여준다.')
+        .setName("뽑기")
+        .setDescription("랜덤 브롤러를 뽑아 보여준다.")
         .addStringOption((option) =>
             option
-                .setName('희귀도')
-                .setDescription('희귀도를 설정합니다.')
+                .setName("희귀도")
+                .setDescription("희귀도를 설정합니다.")
                 .addChoices(
                     {name: "희귀", value: "희귀"},
                     {name: "초희귀", value: "초희귀"},
@@ -48,8 +48,8 @@ const randomCommand = {
                 .setRequired(false))
         .addStringOption((option) =>
             option
-                .setName('역할군')
-                .setDescription('역할군을 설정합니다.')
+                .setName("역할군")
+                .setDescription("역할군을 설정합니다.")
                 .addChoices(
                     {name: "대미지 딜러", value: "대미지 딜러"},
                     {name: "탱커", value: "탱커"},
@@ -61,8 +61,8 @@ const randomCommand = {
                 .setRequired(false))
         .addStringOption((option) =>
             option
-                .setName('성별')
-                .setDescription('성별을 설정합니다.')
+                .setName("성별")
+                .setDescription("성별을 설정합니다.")
                 .addChoices(
                     {name: "남성", value: "남성"},
                     {name: "여성", value: "여성"})
@@ -87,6 +87,6 @@ const randomCommand = {
             }]
         });
     }
-}
+};
 
 export default randomCommand;
