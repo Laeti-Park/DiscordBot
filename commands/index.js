@@ -13,14 +13,13 @@ export default () => {
     commandsDefinition.push(randomCommand.data);
     commandsDefinition.push(profileCommand.data);
     commandsDefinition.push(brawlerCommand.data);
-    commandsDefinition.push(rotationCommand.data());
-    console.log(helpCommand.data, rotationCommand.data())
+    commandsDefinition.push(rotationCommand.data);
 
     commandsExecution.set(helpCommand.data.name, helpCommand);
     commandsExecution.set(randomCommand.data.name, randomCommand);
     commandsExecution.set(profileCommand.data.name, profileCommand);
     commandsExecution.set(brawlerCommand.data.name, brawlerCommand);
-    commandsExecution.set(rotationCommand.data().name, rotationCommand);
+    commandsExecution.set(rotationCommand.data.name, rotationCommand);
 
     return [commandsDefinition, commandsExecution]
 };
