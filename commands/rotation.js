@@ -12,20 +12,18 @@ const currEmbed = (currMap) => {
             name: `${config.modeIcon[currMap.MAP_MD]} ${config.modeKR[currMap.MAP_MD]}`,
             value: currMap.MAP_NM
         }).toJSON()
-
 };
 
 const nextEmbed = (nextMap) => {
     return new EmbedBuilder()
         .setColor(0x2ECC70)
-        .setTitle(`**내일 로테이션**`)
+        .setTitle(`**다음 로테이션**`)
         .setURL(`https://blossomstats.site/map/${nextMap.MAP_ID}`)
         .setThumbnail(`attachment://${nextMap.MAP_ID}.webp`)
         .addFields({
             name: `${config.modeIcon[nextMap.MAP_MD]} ${config.modeKR[nextMap.MAP_MD]}`,
             value: nextMap.MAP_NM
         }).toJSON()
-
 };
 
 
