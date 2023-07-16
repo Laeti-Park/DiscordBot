@@ -12,6 +12,7 @@ const currEmbed = (currMap) => {
             name: `${config.modeIcon[currMap.MAP_MD]} ${config.modeKR[currMap.MAP_MD]}`,
             value: currMap.MAP_NM
         }).toJSON()
+
 };
 
 const nextEmbed = (nextMap) => {
