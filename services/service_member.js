@@ -12,7 +12,8 @@ export class memberService {
                 MEMBER_NM: {
                     [Op.like]: `%${name}%`,
                 }
-            }
+            },
+            order: [["TROPHY_CUR", "DESC"]]
         });
     };
 

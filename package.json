@@ -1,6 +1,6 @@
 {
   "name": "blossom-bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Blossom 디스코드 봇🤖, Brawl Stars🎮",
   "main": "index.js",
   "type": "module",

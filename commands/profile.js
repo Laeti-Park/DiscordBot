@@ -8,7 +8,7 @@ const embed = (member) => {
 
     return new EmbedBuilder()
         .setColor(0x2ECC70)
-        .setTitle(member.MEMBER_NM)
+        .setTitle(member.MEMBER_NM.replace(/<\(.*\)>/, ""))
         .setURL(`https://blossomstats.site/member/${member.MEMBER_ID.replace("#", "")}`)
         .setDescription(member.MEMBER_ID)
         .setThumbnail(`attachment://${member.MEMBER_PROFILE}.webp`)

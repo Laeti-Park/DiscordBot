@@ -26,6 +26,7 @@ export class rotationService {
                     MAP_ID: result[result.length - 1].MAP_ID
                 }
             });
+            console.log(nextMap)
 
             return [currMap, nextMap];
         });
