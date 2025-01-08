@@ -1,0 +1,9 @@
+{
+    "main": "blossom-bot.js",
+    "option": {
+        "apiLevel": 2,
+        "useUnifiedParams": true,
+        "useBabel": false,
+        "scriptPower": false
+    }
+}
